@@ -294,7 +294,7 @@ function attachEvents() {
       const val = document.getElementById('empresaInput').value.trim();
       if (!val) { document.getElementById('empresaInput').focus(); return; }
       state.empresa = val;
-      state.website = document.getElementById('websiteInput').value.trim();
+      state.website = document.getElementById('websiteInput') ? document.getElementById('websiteInput').value.trim() : state.website;
       state.step = 'survey';
       state.currentSection = 0;
       render();
@@ -303,6 +303,8 @@ function attachEvents() {
       if (e.key === 'Enter') startBtn.click();
     });
   }
+  const websiteInput = document.getElementById('websiteInput');
+  if (websiteInput) websiteInput.addEventListener('input', function(e) { state.website = e.target.value.trim(); });
   document.querySelectorAll('.scale-btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
       state.answers[btn.dataset.key] = parseInt(btn.dataset.val);
