@@ -105,7 +105,7 @@ const levels = [
 ];
 function getLevel(pct) { return levels.find(l => pct >= l.min && pct <= l.max) || levels[0]; }
 
-let state = { step: 'intro', empresa: '', answers: {}, openDesafios: '', openMejora: '', currentSection: 0, sendStatus: null, sendMsg: '' };
+let state = { step: 'intro', empresa: '', website: '', answers: {}, openDesafios: '', openMejora: '', currentSection: 0, sendStatus: null, sendMsg: '' };
 
 function calcResults() {
   const areas = sections.map(sec => {
@@ -141,6 +141,10 @@ function renderIntro() {
     '<div class="name-input-wrap">' +
       '<label>Nombre de la empresa</label>' +
       '<input class="name-input" id="empresaInput" type="text" placeholder="Ej: Comercial Los Andes SpA" value="' + state.empresa + '" />' +
+    '</div>' +
+    '<div class="name-input-wrap">' +
+      '<label>Página web (opcional)</label>' +
+      '<input class="name-input" id="websiteInput" type="text" placeholder="Ej: www.miempresa.cl" value="' + state.website + '" />' +
     '</div>' +
     '<button class="btn-primary" id="startBtn">Comenzar diagnóstico →</button>' +
   '</div>';
@@ -243,6 +247,7 @@ async function sendToMake() {
 
   const payload = {
     empresa: state.empresa || 'Sin nombre',
+    website: state.website || '',
     fecha: new Date().toISOString().split('T')[0],
     nivel_madurez: level.label,
     puntaje_total: r.totalSum,
@@ -289,6 +294,7 @@ function attachEvents() {
       const val = document.getElementById('empresaInput').value.trim();
       if (!val) { document.getElementById('empresaInput').focus(); return; }
       state.empresa = val;
+      state.website = document.getElementById('websiteInput').value.trim();
       state.step = 'survey';
       state.currentSection = 0;
       render();
@@ -320,7 +326,7 @@ function attachEvents() {
   if (retryBtn) retryBtn.addEventListener('click', sendToMake);
   const restartBtn = document.getElementById('restartBtn');
   if (restartBtn) restartBtn.addEventListener('click', function() {
-    state = { step: 'intro', empresa: '', answers: {}, openDesafios: '', openMejora: '', currentSection: 0, sendStatus: null, sendMsg: '' };
+    state = { step: 'intro', empresa: '', website: '', answers: {}, openDesafios: '', openMejora: '', currentSection: 0, sendStatus: null, sendMsg: '' };
     render();
   });
 }
