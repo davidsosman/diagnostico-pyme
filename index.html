@@ -86,13 +86,13 @@
 const MAKE_WEBHOOK = 'https://hook.us2.make.com/dpdj7irtdqjlgjtuuqe11gme5gwj38yq';
 
 const sections = [
-  { id: 'estrategia', title: 'Estrategia y Visión', color: '#534AB7', questions: ['Tenemos una visión y estrategia empresarial claramente definidas y documentadas.','Nuestros objetivos de largo plazo (5–10 años) están claramente definidos y guían nuestras decisiones.','Tenemos claramente definido nuestro cliente ideal y mercado objetivo.','Nuestra propuesta de valor o diferenciación competitiva es clara.','El equipo directivo revisa regularmente las prioridades estratégicas.'] },
-  { id: 'visibilidad', title: 'Visibilidad Financiera', color: '#185FA5', questions: ['Nuestros estados financieros son precisos y se entregan mensualmente.','La dirección revisa regularmente el desempeño financiero y los impulsores de rentabilidad.','Tenemos un pronóstico financiero de al menos 6–12 meses.','Operamos con un presupuesto y comparamos regularmente resultados reales contra el plan.','Entendemos claramente qué productos, servicios o clientes generan más rentabilidad.','Comparamos nuestro desempeño con empresas similares o benchmarks del sector.','Podemos responder rápidamente preguntas sobre dónde ganamos dinero, qué priorizar y qué afecta nuestra rentabilidad.'] },
-  { id: 'contabilidad', title: 'Contabilidad y Reportes', color: '#0F6E56', questions: ['Nuestra contabilidad está limpia, actualizada y es confiable.','Los reportes financieros son claros y fáciles de entender para la dirección.','El equipo directivo utiliza la información financiera para tomar decisiones.','Monitoreamos activamente el flujo de caja.','Nuestros procesos contables están documentados y se siguen de forma consistente.'] },
-  { id: 'disciplina', title: 'Disciplina Operativa', color: '#854F0B', questions: ['Tenemos un proceso estructurado de planeación anual.','Realizamos revisiones trimestrales del negocio para evaluar resultados y ajustar planes.','El equipo directivo tiene reuniones semanales estructuradas para revisar prioridades.','Las decisiones operativas se toman basadas en datos y métricas.','Los equipos identifican y resuelven problemas operativos de forma sistemática.'] },
-  { id: 'metricas', title: 'Métricas y KPIs', color: '#993556', questions: ['Medimos un conjunto claro de KPIs que reflejan la salud del negocio.','La dirección revisa estos indicadores semanal o mensualmente.','Cada área o líder tiene métricas claras por las cuales es responsable.','Contamos con un scorecard o dashboard de desempeño.','Medimos indicadores adelantados además de resultados finales.'] },
-  { id: 'sistemas', title: 'Sistemas y Procesos', color: '#5F5E5A', questions: ['Nuestros procesos clave están documentados.','Nuestros sistemas facilitan la operación y los reportes financieros.','Hemos automatizado procesos repetitivos del negocio.','La información fluye correctamente entre sistemas financieros y operativos.'] },
-  { id: 'crecimiento', title: 'Preparación para el Crecimiento', color: '#3B6D11', questions: ['Tenemos claridad sobre qué se necesita para escalar el negocio.','Identificamos regularmente oportunidades para mejorar la rentabilidad.','La dirección confía en los números al tomar decisiones estratégicas.','Una mejor visibilidad financiera mejoraría significativamente nuestras decisiones de crecimiento.'] },
+  { id: 'estrategia', title: 'Estrategia y Visión', color: '#534AB7', questions: ['Tenemos una visión y estrategia empresarial claramente definidas y documentadas.','Nuestros objetivos de largo plazo (5–10 años) están claramente definidos y guían nuestras decisiones.','Tenemos claramente definido nuestro cliente ideal y mercado objetivo.','Nuestra propuesta de valor o diferenciación competitiva es clara.'] },
+  { id: 'visibilidad', title: 'Visibilidad Financiera', color: '#185FA5', questions: ['Nuestros estados financieros son precisos y se entregan mensualmente.','Operamos con un presupuesto y comparamos regularmente resultados reales contra el plan.','Entendemos claramente qué productos, servicios o clientes generan más rentabilidad.','Podemos responder rápidamente preguntas sobre dónde ganamos dinero, qué priorizar y qué afecta nuestra rentabilidad.'] },
+  { id: 'contabilidad', title: 'Contabilidad y Reportes', color: '#0F6E56', questions: ['Nuestra contabilidad está limpia, actualizada y es confiable.','Los reportes financieros son claros y fáciles de entender para la dirección.','El equipo directivo utiliza la información financiera para tomar decisiones.','Monitoreamos activamente el flujo de caja.'] },
+  { id: 'disciplina', title: 'Disciplina Operativa', color: '#854F0B', questions: ['Tenemos un proceso estructurado de planeación anual.','Realizamos revisiones trimestrales del negocio para evaluar resultados y ajustar planes.','El equipo directivo tiene reuniones semanales estructuradas para revisar prioridades.','Las decisiones operativas se toman basadas en datos y métricas.'] },
+  { id: 'metricas', title: 'Métricas y KPIs', color: '#993556', questions: ['Medimos un conjunto claro de KPIs que reflejan la salud del negocio.','La dirección revisa estos indicadores semanal o mensualmente.','Cada área o líder tiene métricas claras por las cuales es responsable.','Contamos con un scorecard o dashboard de desempeño.'] },
+  { id: 'sistemas', title: 'Sistemas y Procesos', color: '#5F5E5A', questions: ['Nuestros procesos clave están documentados.','Nuestros sistemas facilitan la operación y los reportes financieros.','La información fluye correctamente entre sistemas financieros y operativos.','Existe un responsable claro para cada proceso clave del negocio.'] },
+  { id: 'crecimiento', title: 'Preparación para el Crecimiento', color: '#3B6D11', questions: ['Tenemos claridad sobre qué se necesita para escalar el negocio.','Identificamos regularmente oportunidades para mejorar la rentabilidad.','La dirección confía en los números al tomar decisiones estratégicas.','Tenemos un plan de crecimiento claro, con metas, plazos y responsables definidos.'] },
 ];
 
 const scaleLabels = { 1: 'Débil', 2: 'Bajo', 3: 'Aceptable', 4: 'Bueno', 5: 'Fuerte' };
@@ -123,6 +123,7 @@ function calcResults() {
 function render() {
   const app = document.getElementById('app');
   if (state.step === 'intro') app.innerHTML = renderIntro();
+  else if (state.step === 'contexto') app.innerHTML = renderContexto();
   else if (state.step === 'survey') app.innerHTML = renderSurvey();
   else app.innerHTML = renderConfirmacion();
   attachEvents();
@@ -149,6 +150,27 @@ function renderIntro() {
     '<button class="btn-primary" id="startBtn">Comenzar diagnóstico →</button>' +
   '</div>';
 }
+
+function renderContexto() {
+  return '<div class="section-card">' +
+    '<div class="section-header">' +
+      '<span class="section-title">Cuéntanos sobre ' + (state.empresa || 'tu empresa') + '</span>' +
+    '</div>' +
+    '<div class="open-question">' +
+      '<div class="open-label">¿Cuáles son los principales desafíos que enfrenta tu empresa hoy?</div>' +
+      '<textarea class="open-textarea" id="openDesafios" placeholder="Describe brevemente...">' + state.openDesafios + '</textarea>' +
+    '</div>' +
+    '<div class="open-question">' +
+      '<div class="open-label">¿Cuál es la mejora más prioritaria que quisieras lograr en los próximos 6 meses?</div>' +
+      '<textarea class="open-textarea" id="openMejora" placeholder="Describe brevemente...">' + state.openMejora + '</textarea>' +
+    '</div>' +
+  '</div>' +
+  '<div class="nav-row">' +
+    '<button class="btn-secondary" id="prevBtn">← Anterior</button>' +
+    '<button class="btn-primary" id="nextContextoBtn">Comenzar evaluación →</button>' +
+  '</div>';
+}
+
 
 function renderSurvey() {
   const sec = sections[state.currentSection];
@@ -188,14 +210,7 @@ function renderSurvey() {
   });
 
   if (isLast) {
-    html += '<div class="open-question">' +
-      '<div class="open-label">¿Cuáles son los principales desafíos que enfrenta tu empresa hoy?</div>' +
-      '<textarea class="open-textarea" id="openDesafios" placeholder="Describe brevemente...">' + state.openDesafios + '</textarea>' +
-    '</div>' +
-    '<div class="open-question">' +
-      '<div class="open-label">¿Cuál es la mejora más prioritaria que quisieras lograr en los próximos 6 meses?</div>' +
-      '<textarea class="open-textarea" id="openMejora" placeholder="Describe brevemente...">' + state.openMejora + '</textarea>' +
-    '</div>';
+    html += '';
   }
 
   html += '</div>' +
@@ -295,7 +310,7 @@ function attachEvents() {
       if (!val) { document.getElementById('empresaInput').focus(); return; }
       state.empresa = val;
       state.website = document.getElementById('websiteInput') ? document.getElementById('websiteInput').value.trim() : state.website;
-      state.step = 'survey';
+      state.step = 'contexto';
       state.currentSection = 0;
       render();
     });
@@ -305,18 +320,23 @@ function attachEvents() {
   }
   const websiteInput = document.getElementById('websiteInput');
   if (websiteInput) websiteInput.addEventListener('input', function(e) { state.website = e.target.value.trim(); });
+  const ta1 = document.getElementById('openDesafios');
+  if (ta1) ta1.addEventListener('input', function(e) { state.openDesafios = e.target.value; });
+  const ta2 = document.getElementById('openMejora');
+  if (ta2) ta2.addEventListener('input', function(e) { state.openMejora = e.target.value; });
+  const nextContextoBtn = document.getElementById('nextContextoBtn');
+  if (nextContextoBtn) nextContextoBtn.addEventListener('click', function() { state.step = 'survey'; render(); });
   document.querySelectorAll('.scale-btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
       state.answers[btn.dataset.key] = parseInt(btn.dataset.val);
       render();
     });
   });
-  const ta1 = document.getElementById('openDesafios');
-  if (ta1) ta1.addEventListener('input', function(e) { state.openDesafios = e.target.value; });
-  const ta2 = document.getElementById('openMejora');
-  if (ta2) ta2.addEventListener('input', function(e) { state.openMejora = e.target.value; });
   const prevBtn = document.getElementById('prevBtn');
-  if (prevBtn) prevBtn.addEventListener('click', function() { state.currentSection--; render(); });
+  if (prevBtn) prevBtn.addEventListener('click', function() {
+    if (state.step === 'contexto') { state.step = 'intro'; render(); }
+    else { state.currentSection--; render(); }
+  });
   const nextBtn = document.getElementById('nextBtn');
   if (nextBtn) nextBtn.addEventListener('click', function() {
     if (state.currentSection < sections.length - 1) { state.currentSection++; render(); }
