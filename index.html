@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Diagnóstico Inicial Empresas PYME</title>
+<title>Diagnóstico Inicial Empresas</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap');
   :root {
@@ -22,10 +22,11 @@
   .benefits { display: flex; flex-direction: column; gap: 10px; margin: 0 auto 40px; max-width: 380px; text-align: left; }
   .benefit { display: flex; align-items: center; gap: 10px; font-size: 14px; }
   .benefit-dot { width: 22px; height: 22px; background: var(--accent-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 11px; color: var(--accent); font-weight: 700; }
-  .name-input-wrap { margin-bottom: 32px; }
+  .name-input-wrap { margin-bottom: 20px; }
   .name-input-wrap label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 8px; color: var(--text-secondary); text-align: left; max-width: 380px; margin-left: auto; margin-right: auto; }
   .name-input { width: 100%; max-width: 380px; padding: 12px 16px; border: 1.5px solid var(--border); border-radius: var(--radius); font-size: 15px; font-family: 'DM Sans', sans-serif; background: var(--surface); color: var(--text); outline: none; transition: border-color 0.2s; }
   .name-input:focus { border-color: var(--accent); }
+  .intro .btn-primary { margin-top: 12px; }
   .btn-primary { background: var(--accent); color: white; border: none; padding: 14px 36px; border-radius: 100px; font-size: 15px; font-weight: 500; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: opacity 0.2s, transform 0.1s; }
   .btn-primary:hover { opacity: 0.88; }
   .btn-primary:active { transform: scale(0.98); }
@@ -44,40 +45,49 @@
   .question-row:last-child { border-bottom: none; }
   .question-text { font-size: 14px; line-height: 1.55; margin-bottom: 12px; }
   .scale-row { display: flex; gap: 8px; }
-  .scale-btn { flex: 1; padding: 8px 4px; border: 1.5px solid var(--border); border-radius: 8px; background: transparent; font-size: 13px; font-weight: 500; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: all 0.15s; color: var(--text-secondary); display: flex; flex-direction: column; align-items: center; gap: 2px; }
-  .scale-btn .scale-num { font-size: 16px; font-weight: 700; }
-  .scale-btn .scale-label { font-size: 9px; text-align: center; line-height: 1.2; }
+  .scale-row { align-items: center; gap: 6px; }
+  .scale-edge-label { font-size: 11px; color: var(--text-secondary); white-space: nowrap; }
+  .scale-btn { width: 36px; height: 36px; min-width: 36px; border: 1.5px solid var(--border); border-radius: 50%; background: transparent; font-size: 14px; font-weight: 600; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: all 0.15s; color: var(--text-secondary); display: flex; align-items: center; justify-content: center; padding: 0; }
+  .scale-btn .scale-num { font-size: 14px; font-weight: 600; }
+  .scale-btn .scale-label { display: none; }
   .scale-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
   .scale-btn.selected { color: white; }
   .open-question { padding: 16px 24px; border-bottom: 1px solid var(--border); }
   .open-question:last-child { border-bottom: none; }
-  .open-label { font-size: 14px; line-height: 1.55; margin-bottom: 10px; }
+  .open-label { font-size: 14px; line-height: 1.55; margin-bottom: 10px; font-weight: 500; }
   .open-textarea { width: 100%; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 14px; font-family: 'DM Sans', sans-serif; resize: vertical; min-height: 80px; outline: none; color: var(--text); transition: border-color 0.2s; }
   .open-textarea:focus { border-color: var(--accent); }
   .nav-row { display: flex; justify-content: space-between; align-items: center; margin-top: 20px; gap: 12px; }
   .btn-secondary { background: transparent; color: var(--text-secondary); border: 1.5px solid var(--border); padding: 12px 24px; border-radius: 100px; font-size: 14px; font-weight: 500; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: all 0.2s; }
   .btn-secondary:hover { border-color: var(--text); color: var(--text); }
   .unanswered-msg { font-size: 13px; color: var(--danger); }
-  .results-header { text-align: center; padding: 40px 24px 24px; }
-  .results-header h2 { font-family: 'DM Serif Display', serif; font-size: 32px; margin-bottom: 8px; }
-  .level-badge { display: inline-block; padding: 8px 20px; border-radius: 100px; font-size: 14px; font-weight: 600; margin-bottom: 16px; }
-  .score-big { font-size: 48px; font-weight: 700; color: var(--accent); line-height: 1; margin-bottom: 4px; }
-  .score-sub { font-size: 13px; color: var(--text-secondary); }
-  .area-scores { padding: 0 0 20px; }
-  .area-row { padding: 14px 24px; border-bottom: 1px solid var(--border); }
-  .area-row:last-child { border-bottom: none; }
-  .area-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-  .area-name { font-size: 14px; font-weight: 500; }
-  .area-pct { font-size: 13px; font-weight: 600; }
-  .area-bar-bg { height: 6px; background: var(--border); border-radius: 100px; overflow: hidden; }
-  .area-bar-fill { height: 100%; border-radius: 100px; transition: width 0.6s ease; }
-  .send-section { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; margin-top: 16px; text-align: center; }
-  .send-section h3 { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
-  .send-section p { font-size: 13px; color: var(--text-secondary); margin-bottom: 20px; }
-  .send-status { font-size: 14px; font-weight: 500; padding: 12px; border-radius: 8px; }
-  .send-status.success { background: var(--accent-light); color: var(--accent); }
-  .send-status.error { background: #FEF0EE; color: var(--danger); }
-  .restart-btn { margin-top: 16px; display: inline-block; background: transparent; border: none; color: var(--text-secondary); font-size: 13px; cursor: pointer; text-decoration: underline; font-family: 'DM Sans', sans-serif; }
+  .results-section { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 16px; }
+  .results-top { padding: 24px; border-bottom: 1px solid var(--border); }
+  .results-badge { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 8px; }
+  .results-title { font-family: 'DM Serif Display', serif; font-size: 26px; margin-bottom: 20px; }
+  .score-card { border-radius: 10px; padding: 16px 20px; display: flex; align-items: center; gap: 20px; }
+  .score-left { min-width: 80px; }
+  .score-pct { font-size: 42px; font-weight: 700; line-height: 1; }
+  .score-label { font-size: 13px; font-weight: 600; margin-top: 2px; }
+  .score-desc { font-size: 14px; line-height: 1.6; flex: 1; }
+  .score-bar-bg { height: 6px; background: rgba(0,0,0,0.1); border-radius: 100px; overflow: hidden; margin-top: 10px; }
+  .score-bar-fill { height: 100%; border-radius: 100px; }
+  .areas-grid { padding: 20px 24px; border-bottom: 1px solid var(--border); }
+  .areas-title { font-size: 14px; font-weight: 600; margin-bottom: 16px; }
+  .areas-and-radar { display: flex; gap: 24px; align-items: flex-start; }
+  .areas-list { flex: 1; }
+  .area-row { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+  .area-row:last-child { margin-bottom: 0; }
+  .area-name { font-size: 13px; min-width: 170px; }
+  .area-bar-bg { flex: 1; height: 6px; background: var(--border); border-radius: 100px; overflow: hidden; }
+  .area-bar-fill { height: 100%; border-radius: 100px; }
+  .area-pct { font-size: 13px; font-weight: 600; min-width: 36px; text-align: right; }
+  .radar-side { flex-shrink: 0; }
+  .maturity-scale { padding: 20px 24px; }
+  .maturity-title { font-size: 14px; font-weight: 600; margin-bottom: 12px; }
+  .maturity-items { display: flex; flex-wrap: wrap; gap: 8px; }
+  .maturity-item { display: flex; align-items: center; gap: 6px; font-size: 12px; padding: 6px 12px; border-radius: 100px; border: 1px solid; }
+  .maturity-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 </style>
 </head>
 <body>
@@ -97,34 +107,34 @@ const sections = [
 
 const scaleLabels = { 1: 'Débil', 2: 'Bajo', 3: 'Aceptable', 4: 'Bueno', 5: 'Fuerte' };
 const levels = [
-  { min: 0,  max: 39,  label: 'Crítico',             color: '#C0392B', bg: '#FEF0EE' },
-  { min: 40, max: 54,  label: 'En Desarrollo',        color: '#E67E22', bg: '#FEF5EC' },
-  { min: 55, max: 69,  label: 'En Progreso',          color: '#D4AC0D', bg: '#FEFBE6' },
-  { min: 70, max: 84,  label: 'Maduro',               color: '#27AE60', bg: '#EAF8EF' },
-  { min: 85, max: 100, label: 'Excelencia Operativa', color: '#2D5016', bg: '#EEF4E8' },
+  { min: 0,  max: 39,  label: 'Crítico',             color: '#C0392B', bg: '#FEF0EE', desc: 'La empresa requiere intervención urgente en múltiples áreas fundamentales.' },
+  { min: 40, max: 54,  label: 'En Desarrollo',        color: '#E67E22', bg: '#FEF5EC', desc: 'Existen bases, pero faltan procesos y estructuras clave para operar con consistencia.' },
+  { min: 55, max: 69,  label: 'En Progreso',          color: '#D4AC0D', bg: '#FEFBE6', desc: 'La empresa avanza bien pero tiene brechas importantes que limitan su crecimiento.' },
+  { min: 70, max: 84,  label: 'Maduro',               color: '#27AE60', bg: '#EAF8EF', desc: 'La empresa cuenta con buenas prácticas instaladas. El foco debe estar en optimizar y escalar.' },
+  { min: 85, max: 100, label: 'Excelencia Operativa', color: '#2D5016', bg: '#EEF4E8', desc: 'La empresa opera con alto nivel de madurez. El desafío es mantener y seguir innovando.' },
 ];
-function getLevel(pct) { return levels.find(l => pct >= l.min && pct <= l.max) || levels[0]; }
+function getLevel(pct) { return levels.find(function(l){ return pct >= l.min && pct <= l.max; }) || levels[0]; }
 
-let state = { step: 'intro', empresa: '', website: '', answers: {}, openDesafios: '', openMejora: '', currentSection: 0, sendStatus: null, sendMsg: '' };
+let state = { step: 'intro', nombre: '', email: '', hp: '', answers: {}, openDesafios: '', openMejora: '', currentSection: 0, sendStatus: null, sendMsg: '' };
 
 function calcResults() {
-  const areas = sections.map(sec => {
-    const scores = sec.questions.map((_, i) => state.answers[sec.id + '_' + i] || 0);
-    const sum = scores.reduce((a,b) => a+b, 0);
-    const max = sec.questions.length * 5;
-    return { id: sec.id, title: sec.title, color: sec.color, scores, sum, max, pct: Math.round(sum/max*100) };
+  var areas = sections.map(function(sec) {
+    var scores = sec.questions.map(function(_, i){ return state.answers[sec.id + '_' + i] || 0; });
+    var sum = scores.reduce(function(a,b){ return a+b; }, 0);
+    var max = sec.questions.length * 5;
+    return { id: sec.id, title: sec.title, color: sec.color, sum: sum, max: max, pct: Math.round(sum/max*100) };
   });
-  const totalSum = areas.reduce((a,b) => a+b.sum, 0);
-  const totalMax = areas.reduce((a,b) => a+b.max, 0);
-  const totalPct = Math.round(totalSum/totalMax*100);
-  return { areas, totalSum, totalMax, totalPct };
+  var totalSum = areas.reduce(function(a,b){ return a+b.sum; }, 0);
+  var totalMax = areas.reduce(function(a,b){ return a+b.max; }, 0);
+  var totalPct = Math.round(totalSum/totalMax*100);
+  return { areas: areas, totalSum: totalSum, totalMax: totalMax, totalPct: totalPct };
 }
 
 function render() {
-  const app = document.getElementById('app');
+  var app = document.getElementById('app');
   if (state.step === 'intro') app.innerHTML = renderIntro();
-  else if (state.step === 'contexto') app.innerHTML = renderContexto();
   else if (state.step === 'survey') app.innerHTML = renderSurvey();
+  else if (state.step === 'resultados') app.innerHTML = renderResultados();
   else app.innerHTML = renderConfirmacion();
   attachEvents();
 }
@@ -132,30 +142,139 @@ function render() {
 function renderIntro() {
   return '<div class="intro">' +
     '<div class="intro-badge">Diagnóstico Empresarial</div>' +
-    '<h1>Diagnóstico Inicial<br><em>Empresas PYME</em></h1>' +
+    '<h1>Diagnóstico Inicial<br><em>Empresas</em></h1>' +
     '<p>Esta evaluación mide la claridad financiera, disciplina operativa y preparación para el crecimiento de tu empresa. Toma aproximadamente 5–7 minutos.</p>' +
     '<div class="benefits">' +
       '<div class="benefit"><div class="benefit-dot">1</div>Tu nivel de madurez por área</div>' +
       '<div class="benefit"><div class="benefit-dot">2</div>Diagnóstico de principales áreas de mejora</div>' +
       '<div class="benefit"><div class="benefit-dot">3</div>Recomendaciones de crecimiento y rentabilidad</div>' +
     '</div>' +
-    '<div class="name-input-wrap">' +
-      '<label>Nombre de la empresa</label>' +
-      '<input class="name-input" id="empresaInput" type="text" placeholder="Ej: Comercial Los Andes SpA" value="' + state.empresa + '" />' +
-    '</div>' +
-    '<div class="name-input-wrap">' +
-      '<label>Página web (opcional)</label>' +
-      '<input class="name-input" id="websiteInput" type="text" placeholder="Ej: www.miempresa.cl" value="' + state.website + '" />' +
+    '<div class="name-input-wrap"><label>Tu nombre</label>' +
+      '<input class="name-input" id="nombreInput" type="text" placeholder="Ej: Juan Pérez" value="' + state.nombre + '" /></div>' +
+    '<div class="name-input-wrap"><label>Tu email</label>' +
+      '<input class="name-input" id="emailInput" type="email" placeholder="Ej: juan@miempresa.cl" value="' + state.email + '" /></div>' +
+    '<div style="position:absolute;left:-9999px;top:-9999px;opacity:0;height:0;overflow:hidden">' +
+      '<label>No completar</label>' +
+      '<input type="text" id="hpField" name="hp_field" tabindex="-1" autocomplete="off" />' +
     '</div>' +
     '<button class="btn-primary" id="startBtn">Comenzar diagnóstico →</button>' +
   '</div>';
 }
 
-function renderContexto() {
-  return '<div class="section-card">' +
+function renderSurvey() {
+  var sec = sections[state.currentSection];
+  var isLast = state.currentSection === sections.length - 1;
+  var totalQ = sections.reduce(function(a,s){ return a + s.questions.length; }, 0);
+  var answered = Object.keys(state.answers).length;
+  var pct = Math.round(answered / totalQ * 100);
+  var secAnswered = sec.questions.every(function(_, i){ return state.answers[sec.id + '_' + i]; });
+
+  var html = '<div class="progress-wrap">' +
+    '<span class="progress-label">Sección ' + (state.currentSection+1) + ' de ' + sections.length + '</span>' +
+    '<div class="progress-bar-bg"><div class="progress-bar-fill" style="width:' + pct + '%"></div></div>' +
+    '<span class="progress-pct">' + pct + '%</span>' +
+  '</div><div class="section-card">' +
     '<div class="section-header">' +
-      '<span class="section-title">Cuéntanos sobre ' + (state.empresa || 'tu empresa') + '</span>' +
+      '<div class="section-color-dot" style="background:' + sec.color + '"></div>' +
+      '<span class="section-title">' + sec.title + '</span>' +
+      '<span class="section-count">' + sec.questions.length + ' preguntas</span>' +
+    '</div>';
+
+  sec.questions.forEach(function(q, i) {
+    var key = sec.id + '_' + i;
+    var val = state.answers[key];
+    html += '<div class="question-row"><div class="question-text">' + q + '</div><div class="scale-row">';
+    html += '<span class="scale-edge-label">1 = Débil</span>';
+    [1,2,3,4,5].forEach(function(n) {
+      var sel = val === n;
+      html += '<button class="scale-btn' + (sel?' selected':'') + '" data-key="' + key + '" data-val="' + n + '"' +
+        (sel?' style="background:'+sec.color+';border-color:'+sec.color+'"':'') + '>' +
+        '<span class="scale-num">' + n + '</span><span class="scale-label">' + scaleLabels[n] + '</span></button>';
+    });
+    html += '<span class="scale-edge-label">5 = Fuerte</span>';
+    html += '</div></div>';
+  });
+
+  html += '</div><div class="nav-row">' +
+    (state.currentSection > 0 ? '<button class="btn-secondary" id="prevBtn">← Anterior</button>' : '<div></div>') +
+    '<div style="display:flex;align-items:center;gap:12px">' +
+      (!secAnswered ? '<span class="unanswered-msg">Responde todas las preguntas</span>' : '') +
+      '<button class="btn-primary" id="nextBtn"' + (!secAnswered?' disabled':'') + '>' +
+        (isLast ? 'Ver resultados →' : 'Siguiente →') +
+      '</button></div></div>';
+  return html;
+}
+
+function renderRadar(areas) {
+  var cx = 150, cy = 150, r = 105;
+  var n = areas.length;
+  function point(i, pct) {
+    var angle = (Math.PI * 2 * i / n) - Math.PI / 2;
+    return { x: cx + r * pct/100 * Math.cos(angle), y: cy + r * pct/100 * Math.sin(angle) };
+  }
+  function gridPoly(pct) {
+    return areas.map(function(_, i){ var p = point(i, pct); return p.x+','+p.y; }).join(' ');
+  }
+  var axes = areas.map(function(a, i) {
+    var p = point(i, 100);
+    var lp = point(i, 120);
+    var anchor = Math.abs(Math.cos((Math.PI*2*i/n)-Math.PI/2)) < 0.1 ? 'middle' : (Math.cos((Math.PI*2*i/n)-Math.PI/2) > 0 ? 'start' : 'end');
+    var words = a.title.split(' ');
+    var label = words.length > 2 ? words[0]+' '+words[1] : a.title;
+    return '<line x1="'+cx+'" y1="'+cy+'" x2="'+p.x+'" y2="'+p.y+'" stroke="#E2DDD6" stroke-width="1"/>' +
+      '<text x="'+lp.x+'" y="'+(lp.y+4)+'" text-anchor="'+anchor+'" font-size="11" fill="#444" font-family="DM Sans,sans-serif" font-weight="500">'+label+'</text>';
+  }).join('');
+  var dataPoly = areas.map(function(a, i){ var p = point(i, a.pct); return p.x+','+p.y; }).join(' ');
+  var dots = areas.map(function(a, i){ var p = point(i, a.pct); return '<circle cx="'+p.x+'" cy="'+p.y+'" r="4" fill="'+a.color+'"/>'; }).join('');
+  return '<svg viewBox="0 0 300 300" width="260" height="260" xmlns="http://www.w3.org/2000/svg">' +
+    '<polygon points="'+gridPoly(100)+'" fill="none" stroke="#E2DDD6" stroke-width="1"/>' +
+    '<polygon points="'+gridPoly(75)+'" fill="none" stroke="#E2DDD6" stroke-width="0.5"/>' +
+    '<polygon points="'+gridPoly(50)+'" fill="none" stroke="#E2DDD6" stroke-width="0.5"/>' +
+    '<polygon points="'+gridPoly(25)+'" fill="none" stroke="#E2DDD6" stroke-width="0.5"/>' +
+    axes +
+    '<polygon points="'+dataPoly+'" fill="rgba(83,74,183,0.15)" stroke="#534AB7" stroke-width="2"/>' +
+    dots +
+  '</svg>';
+}
+
+function renderResultados() {
+  var r = calcResults();
+  var level = getLevel(r.totalPct);
+  var areaRows = r.areas.map(function(a) {
+    return '<div class="area-row">' +
+      '<span class="area-name">' + a.title + '</span>' +
+      '<div class="area-bar-bg"><div class="area-bar-fill" style="width:'+a.pct+'%;background:'+a.color+'"></div></div>' +
+      '<span class="area-pct" style="color:'+a.color+'">'+a.pct+'%</span>' +
+    '</div>';
+  }).join('');
+
+  return '<div class="results-section">' +
+    '<div class="results-top">' +
+      '<div class="results-badge">Resultados</div>' +
+      '<div class="areas-and-radar">' +
+        '<div class="areas-list">' +
+          '<div class="areas-title">Puntaje por área</div>' +
+          areaRows +
+        '</div>' +
+        '<div class="radar-side">' + renderRadar(r.areas) + '</div>' +
+      '</div>' +
     '</div>' +
+    '<div style="padding:0 24px 24px">' +
+      '<div class="score-card" style="background:'+level.bg+'">' +
+        '<div class="score-left">' +
+          '<div style="font-size:11px;font-weight:600;color:'+level.color+';margin-bottom:4px">Puntaje total</div>' +
+          '<div class="score-pct" style="color:'+level.color+'">'+r.totalPct+'%</div>' +
+          '<div class="score-label" style="color:'+level.color+'">'+level.label+'</div>' +
+        '</div>' +
+        '<div style="flex:1">' +
+          '<div class="score-desc">'+level.desc+'</div>' +
+          '<div class="score-bar-bg"><div class="score-bar-fill" style="width:'+r.totalPct+'%;background:'+level.color+'"></div></div>' +
+        '</div>' +
+      '</div>' +
+    '</div>' +
+  '</div>' +
+  '<div class="section-card">' +
+    '<div class="section-header"><span class="section-title">¡Ya casi terminamos! Cuéntanos un poco más sobre tu empresa</span></div>' +
     '<div class="open-question">' +
       '<div class="open-label">¿Cuáles son los principales desafíos que enfrenta tu empresa hoy?</div>' +
       '<textarea class="open-textarea" id="openDesafios" placeholder="Describe brevemente...">' + state.openDesafios + '</textarea>' +
@@ -165,89 +284,30 @@ function renderContexto() {
       '<textarea class="open-textarea" id="openMejora" placeholder="Describe brevemente...">' + state.openMejora + '</textarea>' +
     '</div>' +
   '</div>' +
-  '<div class="nav-row">' +
-    '<button class="btn-secondary" id="prevBtn">← Anterior</button>' +
-    '<button class="btn-primary" id="nextContextoBtn">Comenzar evaluación →</button>' +
+  '<div class="nav-row"><div></div>' +
+    '<button class="btn-primary" id="finalizarBtn">Finalizar diagnóstico</button>' +
   '</div>';
-}
-
-
-function renderSurvey() {
-  const sec = sections[state.currentSection];
-  const isLast = state.currentSection === sections.length - 1;
-  const totalQ = sections.reduce(function(a,s){ return a + s.questions.length; }, 0);
-  const answered = Object.keys(state.answers).length;
-  const pct = Math.round(answered / totalQ * 100);
-  const secAnswered = sec.questions.every(function(_, i){ return state.answers[sec.id + '_' + i]; });
-
-  let html = '<div class="progress-wrap">' +
-    '<span class="progress-label">Sección ' + (state.currentSection+1) + ' de ' + sections.length + '</span>' +
-    '<div class="progress-bar-bg"><div class="progress-bar-fill" style="width:' + pct + '%"></div></div>' +
-    '<span class="progress-pct">' + pct + '%</span>' +
-  '</div>' +
-  '<div class="section-card">' +
-    '<div class="section-header">' +
-      '<div class="section-color-dot" style="background:' + sec.color + '"></div>' +
-      '<span class="section-title">' + sec.title + '</span>' +
-      '<span class="section-count">' + sec.questions.length + ' preguntas</span>' +
-    '</div>';
-
-  sec.questions.forEach(function(q, i) {
-    const key = sec.id + '_' + i;
-    const val = state.answers[key];
-    html += '<div class="question-row">' +
-      '<div class="question-text">' + q + '</div>' +
-      '<div class="scale-row">';
-    [1,2,3,4,5].forEach(function(n) {
-      const selected = val === n;
-      html += '<button class="scale-btn' + (selected ? ' selected' : '') + '" data-key="' + key + '" data-val="' + n + '"' +
-        (selected ? ' style="background:' + sec.color + ';border-color:' + sec.color + '"' : '') + '>' +
-        '<span class="scale-num">' + n + '</span>' +
-        '<span class="scale-label">' + scaleLabels[n] + '</span>' +
-      '</button>';
-    });
-    html += '</div></div>';
-  });
-
-  if (isLast) {
-    html += '';
-  }
-
-  html += '</div>' +
-  '<div class="nav-row">' +
-    (state.currentSection > 0 ? '<button class="btn-secondary" id="prevBtn">← Anterior</button>' : '<div></div>') +
-    '<div style="display:flex;align-items:center;gap:12px">' +
-      (!secAnswered ? '<span class="unanswered-msg">Responde todas las preguntas</span>' : '') +
-      '<button class="btn-primary" id="nextBtn"' + (!secAnswered ? ' disabled' : '') + '>' +
-        (isLast ? 'Finalizar diagnóstico' : 'Siguiente →') +
-      '</button>' +
-    '</div>' +
-  '</div>';
-  return html;
 }
 
 function renderConfirmacion() {
-  let content = '';
+  var content = '';
   if (state.sendStatus === 'loading') {
     content = '<div style="text-align:center;padding:60px 24px">' +
       '<div style="font-size:40px;margin-bottom:16px">⏳</div>' +
       '<h2 style="font-family:\'DM Serif Display\',serif;font-size:28px;margin-bottom:8px">Enviando diagnóstico...</h2>' +
-      '<p style="font-size:15px;color:var(--text-secondary)">Por favor espera un momento.</p>' +
-    '</div>';
+      '<p style="font-size:15px;color:var(--text-secondary)">Por favor espera un momento.</p></div>';
   } else if (state.sendStatus === 'success') {
     content = '<div style="text-align:center;padding:60px 24px">' +
       '<div style="font-size:40px;margin-bottom:16px">✅</div>' +
       '<h2 style="font-family:\'DM Serif Display\',serif;font-size:28px;margin-bottom:12px">¡Diagnóstico enviado!</h2>' +
-      '<p style="font-size:15px;color:var(--text-secondary);max-width:380px;margin:0 auto 32px">Tus respuestas han sido registradas correctamente. Nos pondremos en contacto contigo con el análisis y recomendaciones.</p>' +
-      '<button class="btn-primary" id="restartBtn">Iniciar nuevo diagnóstico</button>' +
-    '</div>';
+      '<p style="font-size:15px;color:var(--text-secondary);max-width:380px;margin:0 auto 32px">Tus respuestas han sido registradas. Nos pondremos en contacto contigo con el análisis y recomendaciones.</p>' +
+      '<button class="btn-primary" id="restartBtn">Iniciar nuevo diagnóstico</button></div>';
   } else {
     content = '<div style="text-align:center;padding:60px 24px">' +
       '<div style="font-size:40px;margin-bottom:16px">❌</div>' +
       '<h2 style="font-family:\'DM Serif Display\',serif;font-size:28px;margin-bottom:12px">Ocurrió un error</h2>' +
       '<p style="font-size:15px;color:var(--text-secondary);margin-bottom:24px">' + state.sendMsg + '</p>' +
-      '<button class="btn-primary" id="retryBtn">Reintentar</button>' +
-    '</div>';
+      '<button class="btn-primary" id="retryBtn">Reintentar</button></div>';
   }
   return '<div class="section-card">' + content + '</div>';
 }
@@ -256,13 +316,12 @@ async function sendToMake() {
   state.step = 'confirmacion';
   state.sendStatus = 'loading';
   render();
-
-  const r = calcResults();
-  const level = getLevel(r.totalPct);
-
-  const payload = {
-    empresa: state.empresa || 'Sin nombre',
-    website: state.website || '',
+  var r = calcResults();
+  var level = getLevel(r.totalPct);
+  var payload = {
+    nombre: state.nombre || 'Sin nombre',
+    email: state.email || '',
+    hp_field: state.hp || '',
     fecha: new Date().toISOString().split('T')[0],
     nivel_madurez: level.label,
     puntaje_total: r.totalSum,
@@ -271,84 +330,54 @@ async function sendToMake() {
     desafios: state.openDesafios,
     mejora_prioritaria: state.openMejora
   };
-
-  r.areas.forEach(function(a) {
-    payload['total_' + a.id] = a.sum;
-    payload['pct_' + a.id] = a.pct;
-  });
-
+  r.areas.forEach(function(a) { payload['total_'+a.id]=a.sum; payload['pct_'+a.id]=a.pct; });
   sections.forEach(function(sec) {
-    sec.questions.forEach(function(_, i) {
-      payload[sec.id + '_' + (i+1)] = state.answers[sec.id + '_' + i] || 0;
-    });
+    sec.questions.forEach(function(_, i) { payload[sec.id+'_'+(i+1)] = state.answers[sec.id+'_'+i] || 0; });
   });
-
   try {
-    const res = await fetch(MAKE_WEBHOOK, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
-    if (res.ok) {
-      state.sendStatus = 'success';
-      state.sendMsg = '';
-    } else {
-      throw new Error('HTTP ' + res.status);
-    }
-  } catch(err) {
-    state.sendStatus = 'error';
-    state.sendMsg = 'No se pudo enviar: ' + err.message;
-  }
+    var res = await fetch(MAKE_WEBHOOK, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) });
+    if (res.ok) { state.sendStatus = 'success'; }
+    else { throw new Error('HTTP ' + res.status); }
+  } catch(err) { state.sendStatus = 'error'; state.sendMsg = 'No se pudo enviar: ' + err.message; }
   render();
 }
 
 function attachEvents() {
-  const startBtn = document.getElementById('startBtn');
+  var startBtn = document.getElementById('startBtn');
   if (startBtn) {
     startBtn.addEventListener('click', function() {
-      const val = document.getElementById('empresaInput').value.trim();
-      if (!val) { document.getElementById('empresaInput').focus(); return; }
-      state.empresa = val;
-      state.website = document.getElementById('websiteInput') ? document.getElementById('websiteInput').value.trim() : state.website;
-      state.step = 'contexto';
-      state.currentSection = 0;
-      render();
+      var val = document.getElementById('nombreInput').value.trim();
+      if (!val) { document.getElementById('nombreInput').focus(); return; }
+      state.nombre = val;
+      state.email = document.getElementById('emailInput') ? document.getElementById('emailInput').value.trim() : state.email;
+      state.hp = document.getElementById('hpField') ? document.getElementById('hpField').value : '';
+      state.step = 'survey'; state.currentSection = 0; render();
     });
-    document.getElementById('empresaInput').addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') startBtn.click();
-    });
+    document.getElementById('nombreInput').addEventListener('keydown', function(e){ if(e.key==='Enter') startBtn.click(); });
   }
-  const websiteInput = document.getElementById('websiteInput');
-  if (websiteInput) websiteInput.addEventListener('input', function(e) { state.website = e.target.value.trim(); });
-  const ta1 = document.getElementById('openDesafios');
-  if (ta1) ta1.addEventListener('input', function(e) { state.openDesafios = e.target.value; });
-  const ta2 = document.getElementById('openMejora');
-  if (ta2) ta2.addEventListener('input', function(e) { state.openMejora = e.target.value; });
-  const nextContextoBtn = document.getElementById('nextContextoBtn');
-  if (nextContextoBtn) nextContextoBtn.addEventListener('click', function() { state.step = 'survey'; render(); });
+  var emailInput = document.getElementById('emailInput');
+  if (emailInput) emailInput.addEventListener('input', function(e){ state.email = e.target.value.trim(); });
   document.querySelectorAll('.scale-btn').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      state.answers[btn.dataset.key] = parseInt(btn.dataset.val);
-      render();
-    });
+    btn.addEventListener('click', function(){ state.answers[btn.dataset.key] = parseInt(btn.dataset.val); render(); });
   });
-  const prevBtn = document.getElementById('prevBtn');
-  if (prevBtn) prevBtn.addEventListener('click', function() {
-    if (state.step === 'contexto') { state.step = 'intro'; render(); }
-    else { state.currentSection--; render(); }
+  var ta1 = document.getElementById('openDesafios');
+  if (ta1) ta1.addEventListener('input', function(e){ state.openDesafios = e.target.value; });
+  var ta2 = document.getElementById('openMejora');
+  if (ta2) ta2.addEventListener('input', function(e){ state.openMejora = e.target.value; });
+  var prevBtn = document.getElementById('prevBtn');
+  if (prevBtn) prevBtn.addEventListener('click', function(){ state.currentSection--; render(); });
+  var nextBtn = document.getElementById('nextBtn');
+  if (nextBtn) nextBtn.addEventListener('click', function(){
+    if (state.currentSection < sections.length-1) { state.currentSection++; render(); }
+    else { state.step = 'resultados'; render(); }
   });
-  const nextBtn = document.getElementById('nextBtn');
-  if (nextBtn) nextBtn.addEventListener('click', function() {
-    if (state.currentSection < sections.length - 1) { state.currentSection++; render(); }
-    else { sendToMake(); }
-  });
-  const sendBtn = document.getElementById('sendBtn');
-  if (sendBtn) sendBtn.addEventListener('click', sendToMake);
-  const retryBtn = document.getElementById('retryBtn');
+  var finalizarBtn = document.getElementById('finalizarBtn');
+  if (finalizarBtn) finalizarBtn.addEventListener('click', sendToMake);
+  var retryBtn = document.getElementById('retryBtn');
   if (retryBtn) retryBtn.addEventListener('click', sendToMake);
-  const restartBtn = document.getElementById('restartBtn');
-  if (restartBtn) restartBtn.addEventListener('click', function() {
-    state = { step: 'intro', empresa: '', website: '', answers: {}, openDesafios: '', openMejora: '', currentSection: 0, sendStatus: null, sendMsg: '' };
+  var restartBtn = document.getElementById('restartBtn');
+  if (restartBtn) restartBtn.addEventListener('click', function(){
+    state = { step:'intro', nombre:'', email:'', hp:'', answers:{}, openDesafios:'', openMejora:'', currentSection:0, sendStatus:null, sendMsg:'' };
     render();
   });
 }
