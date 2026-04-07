@@ -121,7 +121,17 @@ var LV = [
   { min:85, max:100, lbl:'Excelencia Operativa', c:'#2D5016', bg:'#EEF4E8', d:'La empresa opera con alto nivel de madurez. El desafío es mantener e innovar.' }
 ];
 
-var st = { step:'intro', nombre:'', email:'', ans:{}, si:0, des:'', mej:'', ss:null, sm:'' };
+function loadSt() {
+  try {
+    var saved = sessionStorage.getItem('diag_st');
+    if (saved) return JSON.parse(saved);
+  } catch(e) {}
+  return { step:'intro', nombre:'', email:'', ans:{}, si:0, des:'', mej:'', ss:null, sm:'' };
+}
+function saveSt() {
+  try { sessionStorage.setItem('diag_st', JSON.stringify(st)); } catch(e) {}
+}
+var st = loadSt();
 
 function getLv(pct) {
   for (var i=0; i<LV.length; i++) { if (pct>=LV[i].min && pct<=LV[i].max) return LV[i]; }
@@ -170,6 +180,7 @@ function radarSVG(areas) {
 }
 
 function render() {
+  saveSt();
   var app = document.getElementById('app');
   if (st.step==='intro')  app.innerHTML = tIntro();
   else if (st.step==='survey') app.innerHTML = tSurvey();
@@ -290,7 +301,7 @@ function tCfm() {
       +'<div style="flex:1"><div class="sdesc">'+lv.d+'</div>'
       +'<div class="sbar"><div class="sbarfill" style="width:'+rs.tp+'%;background:'+lv.c+'"></div></div>'
       +'</div></div></div></div>'
-      +'<div class="close-row"><button class="btn-close" onclick="window.close()">Cerrar</button></div>';
+      +'<div class="close-row"><p style="font-size:14px;color:#6B6560;margin-bottom:16px">Puedes cerrar esta pestaña.</p><button class="btn-close" onclick="try{window.close();}catch(e){}">Cerrar pestaña</button></div>';
   }
 
   if (st.ss==='error') {
@@ -305,6 +316,11 @@ function tCfm() {
 }
 
 function doSend() {
+  // Leer valores del DOM antes de cambiar el step
+  var elDes=document.getElementById('i-des');
+  var elMej=document.getElementById('i-mej');
+  if (elDes) st.des=elDes.value;
+  if (elMej) st.mej=elMej.value;
   st.step='cfm'; st.ss='loading'; render();
   var rs=calc(), lv=getLv(rs.tp), i, j, sec;
   var p={
